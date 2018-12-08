@@ -23,6 +23,29 @@
         <input type="button" onclick="window.location.pathname = '/db'" class="slds-button slds-button_brand slds-align_absolute-left" value="Get to next page"/>
       </fieldset>
     </div>
+
+    <div class="container">
+      <div class="slds-text-align_center">Latest Cricket News!</div>
+      <table id="tableCricketNews" class="slds-table slds-table_cell-buffer slds-table_bordered">  
+        <thead>  
+            <tr>  
+                <th>Title</th>  
+                <th>Description</th> 
+                <th>Last Update</th> 
+            </tr>  
+        </thead>  
+          <tbody>  
+          <% for(var i=0; i < news.length; i++) { %>
+            <tr>
+              <td><%= news[i].title %></td>
+              <td><%= news[i].description %></td>
+              <td><%= news[i].Last_update %></td>
+            </tr>
+          <% } %>
+          </tbody>
+      </table> 
+    </div>
+
     <div class="container">
       <div class="slds-text-align_center">Live Score Card!</div>
       <table id="tableCricketScore" class="slds-table slds-table_cell-buffer slds-table_bordered">  
@@ -79,6 +102,16 @@
 
     $(document).ready(function (){
         var table = $('#tableCricketSchedule').DataTable({
+          "info": true,
+          "lengthChange": false,
+          "pageLength" : 7,
+          "paging": true,
+          "searching": true
+        });
+    });
+
+    $(document).ready(function (){
+        var table = $('#tableCricketNews').DataTable({
           "info": true,
           "lengthChange": false,
           "pageLength" : 7,

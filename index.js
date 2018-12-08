@@ -5,11 +5,7 @@ const
     cricketApiKey = "Dy06sly2bMR7in8tIjaXtGejkJ03 "
     apecricket = require("ape-cricket"),
     app = express(),
-    port = process.env.PORT ? process.env.PORT : 4111;
-
-var 
-    schedule,
-    score;
+    port = process.env.PORT ? process.env.PORT : 4122;
 
     app.set('view engine', 'ejs');
     app.use(express.static('public'));
@@ -17,12 +13,28 @@ var
     app.use('/slds', express.static(__dirname + '/node_modules/@salesforce-ux/design-system/assets'));
 
     app.get('/', function(req,res){
-        apecricket.schedule( cricketApiKey, function(response){ 
-            schedule = JSON.parse(response).data.data;
-            apecricket.cricket( cricketApiKey, function(response){ 
-                score = JSON.parse(response).data.data;
-                res.render('index', {weather: null, error: null, "schedule" : schedule, "score" : score});
+
+        var scheduleAPI = new Promise(function(resolve) {
+            apecricket.schedule( cricketApiKey, function(response){ 
+                resolve(JSON.parse(response).data.data);
             });
+        });
+
+        var scoreAPI = new Promise(function(resolve) {
+            apecricket.cricket( cricketApiKey, function(response){ 
+                resolve(JSON.parse(response).data.data);
+            });
+        });
+
+
+        var newsAPI = new Promise(function(resolve) {
+            apecricket.news( cricketApiKey, function(response){ 
+                resolve(JSON.parse(response).data.data);
+            });
+        });
+        
+        Promise.all([scheduleAPI, scoreAPI, newsAPI]).then(function(payloads) {
+            res.render('index', {"schedule" : payloads[0], "score" : payloads[1], "news" : payloads[2]});
         });
     });
 
