@@ -1,40 +1,28 @@
 <!DOCTYPE html>
 <html>
-
-  
   <head>
     <meta charset="utf-8">
     <title>Praveen Kumar Chhindra</title>
-    <!--<link rel="stylesheet" type="text/css" href="/css/style.css">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/slds/styles/salesforce-lightning-design-system.css" />
   </head>
 
   <style>
-    .paginate_button  {
-      padding: 5px;
-    }
+    .paginate_button { padding: 5px; }
   </style>
+
   <body>
     <div class="container">
       <div class="slds-text-align_center">Checkout the weather of your favourite places!</div>
       <fieldset>
-        <form action="/" method="post">
-          <input name="city" type="text" class="slds-input" placeholder="Enter a City" required>
-          <input type="submit" class="slds-button slds-button_brand slds-align_absolute-center" value="Get Weather">
-        </form>
-        <% if(weather !== null){ %>
-          <p class=".slds-text-title"><%= weather %></p>
-        <% } %>
-
-        <% if(error !== null){ %>
-          <p><%= error %></p>
-        <% } %>
+        <input name="city" id="cityInput" type="text" class="slds-input" placeholder="Enter a City" required>
+        <input type="button" class="slds-button slds-button_brand slds-align_absolute-center" value="Get Weather" onclick="getWeatherInfo();">
+        <div id="weatherOutput" class="slds-text-align_center"></div>
+      
+        <input type="button" onclick="window.location.pathname = '/db'" class="slds-button slds-button_brand slds-align_absolute-left" value="Get to next page"/>
       </fieldset>
     </div>
-
     <div class="container">
       <div class="slds-text-align_center">Live Score Card!</div>
       <table id="tableCricketScore" class="slds-table slds-table_cell-buffer slds-table_bordered">  
@@ -98,5 +86,14 @@
           "searching": true
         });
     });
+
+    function getWeatherInfo(form) {
+      $.post('/', {
+        city: document.getElementById("cityInput").value
+      }).then(function (data) {
+        console.log('data ', data);
+        $('#weatherOutput').html(data);
+      });
+    }
   </script>
 </html>
