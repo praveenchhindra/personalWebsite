@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+  
+  <head>
+    <meta charset="utf-8">
+    <title>Praveen Kumar Chhindra</title>
+    <!--<link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/slds/styles/salesforce-lightning-design-system.css" />
+  </head>
+
+  <style>
+    .paginate_button  {
+      padding: 5px;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <div class="slds-text-align_center">Checkout the weather of your favourite places!</div>
+      <fieldset>
+        <form action="/" method="post">
+          <input name="city" type="text" class="slds-input" placeholder="Enter a City" required>
+          <input type="submit" class="slds-button slds-button_brand slds-align_absolute-center" value="Get Weather">
+        </form>
+        <% if(weather !== null){ %>
+          <p class=".slds-text-title"><%= weather %></p>
+        <% } %>
+
+        <% if(error !== null){ %>
+          <p><%= error %></p>
+        <% } %>
+      </fieldset>
+    </div>
+
+    <div class="container">
+      <div class="slds-text-align_center">Live Score Card!</div>
+      <table id="tableCricketScore" class="slds-table slds-table_cell-buffer slds-table_bordered">  
+        <thead>  
+            <tr>  
+                <th>ID</th>  
+                <th>Score</th> 
+            </tr>  
+        </thead>  
+          <tbody>  
+          <% for(var i=0; i < score.length; i++) { %>
+            <tr>
+              <td><%= score[i].unique_id %></td>
+              <td><%= score[i].title %></td>
+            </tr>
+          <% } %>
+          </tbody>
+      </table> 
+    </div>
+
+    <div class="container">
+      <div class="slds-text-align_center">Upcoming cricket matches schedule!</div>
+      <table id="tableCricketSchedule" class="slds-table slds-table_cell-buffer slds-table_bordered">  
+        <thead>  
+            <tr>  
+                <th>ID</th>  
+                <th>Name</th> 
+                <th>Date</th>
+            </tr>  
+        </thead>  
+         <tbody>  
+          <% for(var i=0; i < schedule.length; i++) { %>
+            <tr>
+              <td><%= schedule[i].unique_id %></td>
+              <td><%= schedule[i].name %></td>
+              <td><%= schedule[i].date %></td>
+            </tr>
+         <% } %>
+         </tbody>
+      </table> 
+    </div>
+  </body>
+
+  <script>
+    $(document).ready(function (){
+        var table = $('#tableCricketScore').DataTable({
+          "info": true,
+          "lengthChange": false,
+          "pageLength" : 7,
+          "paging": true,
+          "searching": true
+        });
+    });
+
+    $(document).ready(function (){
+        var table = $('#tableCricketSchedule').DataTable({
+          "info": true,
+          "lengthChange": false,
+          "pageLength" : 7,
+          "paging": true,
+          "searching": true
+        });
+    });
+  </script>
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "command-line-weather-app",
+  "version": "1.0.0",
+  "description": "first commnad line node js app",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@salesforce-ux/design-system": "^2.7.5",
+    "ape-cricket": "^1.1.7",
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "request": "^2.88.0"
+  }
+}
